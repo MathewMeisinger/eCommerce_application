@@ -1,4 +1,4 @@
-# eCommerce Application Part 2
+# eCommerce Application
 
 ## Overview
 
