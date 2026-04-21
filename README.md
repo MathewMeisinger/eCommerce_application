@@ -1,4 +1,4 @@
-# eCommerce Application Part 2
+# eCommerce Application
 
 ## Overview
 
@@ -215,10 +215,6 @@ You will need a matching database setup locally for the project to run with the 
 
 1. Open a terminal.
 2. Navigate to the project folder:
-
-```bash
-cd "M06T07 – Django – eCommerce Application Part 2/ecommerce_project"
-```
 
 3. Install dependencies:
 
