@@ -34,7 +34,7 @@ X_REDIRECT_URL = os.getenv("X_REDIRECT_URL")
 # See https://docs.djangoproject.com/en/5.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = "django-insecure-j%%&2^+w!giv1&8_^84suy+eh7f9c!mj_0gfgkp^yj^-h&%2s7"
+SECRET_KEY = "your_key_here"
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
