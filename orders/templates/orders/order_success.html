@@ -1,0 +1,46 @@
+{% extends "base.html" %}
+
+{% block title %}Order Successful{% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+    <h1>Order Successful</h1>
+
+    <p>Thank you for your purchase, {{ order.user.username }}.</p>
+
+    <div class="card mt-3">
+        <div class="card-body">
+            <h4>Order Details</h4>
+            <p><strong>Order Number:</strong> {{ order.id }}</p>
+            <p><strong>Date:</strong> {{ order.created_at }}</p>
+            <p><strong>Total Paid:</strong> {{ order.total_price }}</p>
+
+            <h5 class="mt-4">Items Purchased</h5>
+            <ul>
+                {% for item in order.items.all %}
+                    <li>
+                        {{ item.product.name }}
+                        — Quantity: {{ item.quantity }}
+                        — Price: {{ item.price_each }}
+                    </li>
+                {% endfor %}
+            </ul>
+
+            {% if order.email_sent %}
+                <p class="text-success mt-3">
+                    An invoice has been emailed to: <strong>{{ order.user.email }}</strong>.
+                </p>
+            {% else %}
+                <p class="text-warning mt-3">
+                    Invoice email could not be sent.
+                </p>
+            {% endif %}
+        </div>
+    </div>
+
+    <div class="mt-4">
+        <a href="{% url 'home' %}" class="btn btn-primary">Return to Home</a>
+        <a href="{% url 'cart-detail' %}" class="btn btn-secondary">View Cart</a>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,80 @@
+{% extends 'base.html' %}
+
+{% block title %}
+    <h1>View Item</h1>
+{% endblock %}
+
+{% block content %}
+    <h1>{{ object.name }}</h1>
+    <p>{{ object.description }}</p>
+    <p>Price: R{{ object.price }}</p>
+    <p>Store: {{ object.store }}</p>
+
+    <!-- Buyers can add the product to their cart and submit a review from this page. -->
+    {% if user.is_authenticated and user.is_buyer %}
+        <form action="{% url 'add-to-cart' product.id %}" method="post">
+            {% csrf_token %}
+            <button type="submit">Add to Cart</button>
+        </form>
+
+        <h3>Leave a Review</h3>
+        <form method="POST">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button type="submit">Submit Review</button>
+        </form>
+    {% endif %}
+
+    <h3>Reviews</h3>
+    <!-- Reviews show whether the reviewer has previously purchased the product. -->
+    {% for review in product.reviews.all %}
+        <div>
+            <strong>{{ review.user.username }}</strong>
+            {% if review.is_verified %}
+                <span>(Verified)</span>
+            {% else %}
+                <span>(Unverified)</span>
+            {% endif %}
+            <p>{{ review.comment }}</p>
+        </div>
+    {% empty %}
+        <p>No reviews yet.</p>
+    {% endfor %}
+
+
+    {% if can_edit %}
+        <!-- Product owners can edit or soft-delete their own listings. -->
+        <a href="{% url 'product-edit' product.pk %}">Edit Product</a>
+        <form action="{% url 'product-delete' product.pk %}" method="post" style="display:inline">
+            {% csrf_token %}
+            <button type="submit">Delete Product</button>
+        </form>
+    {% endif %}
+{% endblock %}
+
+<script>
+    // Client-side helper for asynchronously updating the cart count after adding an item.
+    async function addToCart(productId, qty=1) {
+        const csrftoken = document.querySelector('[name=csrfmiddlewaretoken]').value;
+        const res = await fetch("{% url 'cart-add' %}", {
+            method: 'POST',
+            headers: {
+            'X-CSRFToken': csrftoken,
+            'X-Requested-With': 'XMLHttpRequest',
+            'Content-Type': 'application/x-www-form-urlencoded'
+            },
+            body: new URLSearchParams({
+            product_id: productId,
+            quantity: qty
+            })
+        });
+
+        if (!res.ok) {
+            alert('Failed to add to cart');
+            return;
+        }
+
+        const data = await res.json();
+        document.getElementById('cart-count').innerText = data.cart_count;
+    }
+</script>

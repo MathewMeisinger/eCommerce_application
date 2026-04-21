@@ -1,0 +1,13 @@
+Hello {{ user.username }},
+
+Thank you for your order. Order #{{ order.pk }} was placed on {{ order.created_at }}.
+
+Items:
+{% for item in items %}
+- {{ item.product.name }} x {{ item.quantity }} @ {{ item.price_each }} each: {{ item.quantity|mul:item.price_each }}
+{% endfor %}
+
+Total: {{ order.total_price }}
+
+Regards,
+eCommerce Application

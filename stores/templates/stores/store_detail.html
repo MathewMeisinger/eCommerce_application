@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+
+{% block title %}
+<h1>{{ store.name }}</h1>
+{% endblock %}
+
+{% block content %}
+<a href="{% url 'store-edit' store.pk %}">Edit Store</a>
+<a href="{% url 'store-delete' store.pk %}">Delete Store</a>
+
+<h2> {{ store.name }}</h2>
+<h2>Products</h2>
+    {% for product in products %}
+        <div>
+            <a href="{% url 'product-detail' product.pk %}">
+                {{ product.name }} - R{{ product.price }}
+            </a>
+        </div>
+    {% endfor %}
+
+<br>
+<a href="{% url 'product-add' store.pk %}">Add Product</a>
+{% endblock %}

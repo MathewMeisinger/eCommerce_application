@@ -1,0 +1,15 @@
+Hello {{ user.username }},
+
+Thank you for your order!
+
+Order Number: {{ order.id }}
+Order Date: {{ order.created_at }}
+
+Items:
+{% for item in items %}
+- {{ item.product.name }} (x{{ item.quantity}}) – {{ item.price_each }} each
+{% endfor %}
+
+Total: {{ order.total_price }}
+
+We appreciate your business.

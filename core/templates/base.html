@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Ecommerce</title>
+</head>
+<body>
+
+<!-- Shared navigation shown across the site. Links change by authentication state and role. -->
+<nav>
+    {% if user.is_authenticated %}
+        Welcome, {{ user.username }}
+        <form method="POST" action="{% url 'profile_view' %}">
+            {% csrf_token %}
+            <button type="submit">View Profile</button>
+        </form>
+
+        <form method="POST" action="{% url 'logout' %}">
+            {% csrf_token %}
+            <button type="submit">Logout</button>
+        </form>
+
+        <form method="POST" action="{% url 'home' %}">
+            {% csrf_token %}
+            <button type="submit">Homepage</button>
+        </form>
+
+        {% if user.is_buyer %}
+            <a href="{% url 'cart-detail' %}">
+                Cart:
+                <span id="cart-count">
+                    {{ request.user.cart.items.count|default:0 }}
+                </span>
+            </a>
+        {% endif %}
+    {% else %}
+        <form method="POST" action="{% url 'register' %}">
+            {% csrf_token %}
+            <button type="submit">Register</button>
+        </form>
+
+        <form method="POST" action="{% url 'home' %}">
+            {% csrf_token %}
+            <button type="submit">Homepage</button>
+        </form>
+    {% endif %}
+</nav>
+
+<hr>
+
+<!-- Child templates inject their page-specific content here. -->
+{% block content %}{% endblock %}
+
+</body>
+</html>

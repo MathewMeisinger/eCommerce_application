@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+
+{% block title %}
+    Buyer homepage
+{% endblock %}
+
+{% block content %}
+<h2>All Products</h2>
+<form method="GET" action="">
+    <input type="text" name="q" placeholder="Search products...">
+    <button type="submit">Search</button>
+</form>
+
+<ul>
+    {% for product in products %}
+        <li>
+            {{ product.name }} - R{{ product.price }}
+            <a href="{% url 'product-detail' product.id %}">View</a>
+        </li>
+    {% endfor %}
+</ul>
+{% endblock %}

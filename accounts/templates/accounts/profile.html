@@ -1,0 +1,19 @@
+{% extends 'base.html' %}
+
+{% block title %}{% endblock %}
+
+{% block content %}
+<h1>Your Profile</h1>
+
+<p><strong>Username:</strong> {{ user_obj.username }}</p>
+<p><strong>Email:</strong> {{ user_obj.email }}</p>
+
+{% if user_obj.is_vendor %}
+    <p><strong>Role:</strong> Vendor</p>
+{% else %}
+    <p><strong>Role:</strong> Buyer</p>
+{% endif %}
+
+<a href="{% url 'profile_update' %}">Update Profile</a><br>
+<a href="{% url 'profile_delete' %}">Delete Account</a>
+{% endblock %}
