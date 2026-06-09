@@ -262,8 +262,6 @@ python manage.py runserver
 
 ## Notes
 
-- For this cleanup pass, only **Python comments/docstrings**, **HTML comments**, and this `README.md` were intended to be updated.
-- Application logic and intended behavior were left unchanged.
 - Some integrations depend on valid local environment setup, especially:
   - the database,
   - email settings,
